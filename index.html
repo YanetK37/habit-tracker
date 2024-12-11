@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>21/90 Habit Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .habit-list {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .habit {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+        .add-habit {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>21/90 Habit Tracker</h1>
+        <p>Track your habits and build lasting routines!</p>
+    </div>
+
+    <div class="add-habit container">
+        <div class="input-group">
+            <input type="text" id="habitInput" class="form-control" placeholder="Enter a new habit">
+            <button class="btn btn-primary" id="addHabitBtn">Add Habit</button>
+        </div>
+    </div>
+
+    <div class="habit-list container">
+        <h2>Your Habits</h2>
+        <div id="habitContainer"></div>
+    </div>
+
+    <script>
+        const habitContainer = document.getElementById('habitContainer');
+        const habitInput = document.getElementById('habitInput');
+        const addHabitBtn = document.getElementById('addHabitBtn');
+
+        function createHabitElement(habitName) {
+            const habitDiv = document.createElement('div');
+            habitDiv.className = 'habit';
+
+            const habitText = document.createElement('span');
+            habitText.textContent = habitName;
+
+            const streaks = document.createElement('span');
+            streaks.textContent = 'Day 0';
+            let days = 0;
+
+            const reminder = document.createElement('button');
+            reminder.textContent = 'Remind Me';
+            reminder.className = 'btn btn-sm btn-warning';
+            reminder.addEventListener('click', () => {
+                alert(`${habitName}: Reminder set for Day 21 and Day 90!`);
+            });
+
+            habitDiv.appendChild(habitText);
+            habitDiv.appendChild(streaks);
+            habitDiv.appendChild(reminder);
+
+            habitContainer.appendChild(habitDiv);
+        }
+
+        addHabitBtn.addEventListener('click', () => {
+            const habitName = habitInput.value.trim();
+            const isValid = /^[a-zA-Z0-9 ]+$/.test(habitName);
+
+            if (habitName && isValid) {
+                createHabitElement(habitName);
+                habitInput.value = '';
+            } else {
+                alert('Please enter a valid habit name (letters, numbers, and spaces only)!');
+            }
+        });
+    </script>
+</body>
+</html>
