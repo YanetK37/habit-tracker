@@ -7,13 +7,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(to bottom right, #fde2e4, #fad2e1, #c5dedd);
             color: #333;
         }
         .header {
             text-align: center;
             margin: 20px 0;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            color: #f08080;
         }
         .habit-list {
             max-width: 600px;
@@ -25,13 +29,27 @@
             align-items: center;
             padding: 10px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 10px;
             margin-bottom: 10px;
             background-color: #fff;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
         }
         .add-habit {
             max-width: 600px;
             margin: 20px auto;
+        }
+        .add-habit input {
+            border: 2px solid #fad2e1;
+            border-radius: 10px;
+        }
+        .add-habit button {
+            background-color: #f08080;
+            border: none;
+            color: white;
+            border-radius: 10px;
+        }
+        .habit input[type="checkbox"] {
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -62,6 +80,9 @@
             const habitDiv = document.createElement('div');
             habitDiv.className = 'habit';
 
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+
             const habitText = document.createElement('span');
             habitText.textContent = habitName;
 
@@ -69,16 +90,22 @@
             streaks.textContent = 'Day 0';
             let days = 0;
 
-            const reminder = document.createElement('button');
-            reminder.textContent = 'Remind Me';
-            reminder.className = 'btn btn-sm btn-warning';
-            reminder.addEventListener('click', () => {
-                alert(`${habitName}: Reminder set for Day 21 and Day 90!`);
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    days++;
+                    streaks.textContent = `Day ${days}`;
+                    if (days === 90) {
+                        alert(`🎉 Congratulations on completing 90 days of ${habitName}! 🎉`);
+                    }
+                } else {
+                    days--;
+                    streaks.textContent = `Day ${days}`;
+                }
             });
 
+            habitDiv.appendChild(checkbox);
             habitDiv.appendChild(habitText);
             habitDiv.appendChild(streaks);
-            habitDiv.appendChild(reminder);
 
             habitContainer.appendChild(habitDiv);
         }
